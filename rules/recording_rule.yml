@@ -1,0 +1,7 @@
+groups:
+ - name: recording_rules
+   rules:
+     - record: cpu:cpu_usage_rate_per_second:avg
+       expr: avg(rate(node_cpu_seconds_total[1m])) by (cpu)
+
+

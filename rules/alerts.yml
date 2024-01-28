@@ -1,0 +1,13 @@
+groups:
+ - name: Alerts
+   rules:
+     - alert:  Is Prometheus Server Up ?
+       expr: up{job="node-exporter"} == 0
+       for: 0m
+       labels:
+         team: Team Alpha
+         severity: Critical
+       annotations:
+         summary: "{{ $labels.instance }} is Down"
+         description: "Team Alpha has to restart the server {{ $labels }} VALUE: {{ $value }}"
+
