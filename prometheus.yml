@@ -1,13 +1,36 @@
 global:
   scrape_interval: 15s
 
-rule_files:
-    - "rules/alerts.yml"
-    - "rules/recording_rule.yml"
+# rule_files:
+#     - "rules/alerts.yml"
+#     - "rules/recording_rule.yml"
+#
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
-  - job_name: 'node-exporter'
-    static_configs:
-      - targets: ['<<<ip>>>:9100']
+  - job_name: 'aws_sd'
+    ec2_sd_configs:
+      - region: us-east-1
+        port: 9100
+#        role_arn: arn:aws:iam::407597173222:role/prometheus-test
+###        or
+#        access_key: 
+#        secret_key:
+        filters: 
+          - name: tag:Name 
+            values:  
+              - dev-*
+    relabel_configs: 
+      - source_labels: [__meta_ec2_tag_Name, __meta_ec2_private_ip]
+        target_label: instance 
+      - source_labels: [__meta_ec2_tag_Name]
+        regex: dev-test.*
+        action: drop 
+      - source_labels: [__meta_ec2_public_ip]
+        replacement: ${1}:9100
+        target_label: __address__ 
+
+  # - job_name: 'node-exporter'
+  #   static_configs:
+  #     - targets: ['<<<ip>>>:9100']
