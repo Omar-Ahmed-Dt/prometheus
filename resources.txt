@@ -1,0 +1,19 @@
+# CPU: 
+avg without (cpu)(irate(node_cpu_seconds_total{job="aws_sd",instance="dev-prometheus;172.31.93.122",mode!="idle"}[1m]))
+
+# Memory: 
+node_memory_MemTotal_bytes{instance="dev-prometheus;172.31.93.122", job="aws_sd"} - node_memory_MemFree_bytes{instance="dev-prometheus;172.31.93.122", job="aws_sd"} - node_memory_Cached_bytes{instance="dev-prometheus;172.31.93.122", job="aws_sd"} - node_memory_Buffers_bytes{instance="dev-prometheus;172.31.93.122", job="aws_sd"}
+
+node_memory_Buffers_bytes{instance="dev-prometheus;172.31.93.122", job="aws_sd"}
+
+node_memory_Cached_bytes{instance="dev-prometheus;172.31.93.122", job="aws_sd"}
+
+node_memory_MemFree_bytes{instance="dev-prometheus;172.31.93.122", job="aws_sd"}
+
+# Network:
+irate(node_network_receive_bytes_total{job="aws_sd",instance="dev-prometheus;172.31.93.122"}[5m])
+
+irate(node_network_transmit_bytes_total{job="aws_sd",instance="dev-prometheus;172.31.93.122"}[5m])
+
+# Disk:
+node_filesystem_size_bytes{job="aws_sd",instance="dev-prometheus;172.31.93.122", device!~"/dev/loop.*", device!~"tempfs | nsfs", device!="gvfsd-fuse"} - node_filesystem_avail_bytes{job="aws_sd",instance="dev-prometheus;172.31.93.122"}
